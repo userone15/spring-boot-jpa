@@ -3,7 +3,16 @@ server:
   
 spring:
  profiles.active: development
+ jpa:
+    hibernate:
+      naming-strategy: org.hibernate.cfg.DefaultNamingStrategy 
 spring.data.jpa.repositories.enabled: true
+spring.jpa:
+    show-sql: true
+    format-sql: false
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.Oracle10gDialect
 
 ---
 spring:
