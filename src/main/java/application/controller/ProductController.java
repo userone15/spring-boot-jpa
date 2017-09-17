@@ -6,13 +6,17 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import application.model.Product;
+import application.model.ProductSpec;
 import application.repository.ProductRepository;
 
 import org.slf4j.Logger;
@@ -27,17 +31,16 @@ public class ProductController {
 	@Autowired
 	private ProductRepository productRepository;
 	
-	@RequestMapping(method = RequestMethod.POST)
-	public Map<String, Object> createProduct(@RequestBody Map<String, Object> productMap){
-		Product product = new Product((Integer)productMap.get("id"), 
-				productMap.get("product").toString(),
-				productMap.get("imageurl").toString(),
-				productMap.get("price").toString());
-	    
-	    Map<String, Object> response = new LinkedHashMap<String, Object>();
+	@RequestMapping(method = RequestMethod.POST, 
+			        produces={MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE}, 
+			        consumes= {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
+			        headers = {"content-type=application/json","content-type=application/xml"})
+	@ResponseBody
+	public ResponseEntity<?> createProduct(@RequestBody Product product){
+		Map<String, Object> response = new LinkedHashMap<String, Object>();
 	    response.put("message", "Product created successfully");
-	    response.put("book", productRepository.save(product));
-	    return response;
+	    response.put("product", productRepository.save(product));
+	    return ResponseEntity.ok(response);
 	}
 	
 	@RequestMapping(method = RequestMethod.GET)
@@ -47,6 +50,15 @@ public class ProductController {
 	    Map<String, Object> response = new LinkedHashMap<String, Object>();
 	    response.put("totalProducts", products.size());
 	    response.put("products", products);
+	    return response;
+	  }
+	
+	@RequestMapping(method = RequestMethod.POST, value = "/getProductByCriteria")
+	  public Map<String, Object> getProductByCriteria(@RequestBody Product product){
+		LOG.info("Application is invoked!");
+	    Product result = productRepository.findAll(new ProductSpec(product));
+	    Map<String, Object> response = new LinkedHashMap<String, Object>();
+	    response.put("product", result);
 	    return response;
 	  }
 	
