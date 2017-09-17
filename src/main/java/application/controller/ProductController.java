@@ -20,6 +20,9 @@ import org.springframework.web.bind.annotation.RestController;
 import application.model.Product;
 import application.model.ProductSpec;
 import application.repository.ProductRepository;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 
 @RestController
 @RequestMapping("/product")
@@ -34,6 +37,11 @@ public class ProductController {
 			        produces={MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE}, 
 			        consumes= {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
 			        headers = {"content-type=application/json","content-type=application/xml"})
+	@ApiOperation(value = "Create Product Service", notes = "Creates a product. SLA:500")
+	@ApiResponses(value = { 
+			@ApiResponse(code = 200, message = "Product created Successfully"),
+			@ApiResponse(code = 400, message = "Invalid Input Provided"),
+			@ApiResponse(code = 404, message = "Error") })
 	public ResponseEntity<?> createProduct(@RequestBody Product product){
 		Map<String, Object> response = new LinkedHashMap<String, Object>();
 	    response.put("message", "Product created successfully");
