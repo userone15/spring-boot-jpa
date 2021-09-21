@@ -3,8 +3,18 @@ server:
   
 spring:
  profiles.active: development
+ jpa:
+    hibernate:
+      naming-strategy: org.hibernate.cfg.DefaultNamingStrategy 
 spring.data.jpa.repositories.enabled: true
-
+spring.jpa:
+    show-sql: true
+    format-sql: false
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.Oracle10gDialect
+        connection:
+          pool_size:50
 ---
 spring:
  profiles: development
@@ -14,8 +24,7 @@ logging:
     console: "%d %-5level %logger : %msg%n"
     file: "%d %-5level [%thread] %logger : %msg%n"
   level:
-    org.springframework.web: DEBUG
-    guru.springframework.controllers: DEBUG
+    ROOT: INFO
     
 product.datasource:
   driverClassName: oracle.jdbc.driver.OracleDriver
@@ -27,5 +36,5 @@ product.datasource:
   max-idle: 10
   min-idle: 10
   initial-size: 10
-  validation-query: "SELECT 1"
+  validation-query: "select 1 from dual"
   test-on-borrow: true

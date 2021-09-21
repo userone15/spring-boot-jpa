@@ -8,12 +8,15 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+
 /**
  * @author SENTHILKUMAR S
  *
  */
 @Entity
 @Table(name = "product")
+@JsonPropertyOrder({"id", "product", "imageurl", "price"})
 public class Product {
 	
 	public Product(){
@@ -29,13 +32,17 @@ public class Product {
 
 	@Id
 	@Column(name = "id")
+	
 	private int id;
+	
 	
 	@Column(name = "product")
 	private String product;
 	
+	
 	@Column(name = "imageurl")
 	private String imageurl;
+	
 	
 	@Column(name = "price")
 	private String price;
