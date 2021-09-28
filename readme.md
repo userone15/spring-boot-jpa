@@ -3,6 +3,4 @@ It uses JPA implementation at DAO.
 
 Rest service accepts both xml and json in request and response.
 
-
 UpdatesFinal
-
