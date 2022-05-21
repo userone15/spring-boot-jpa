@@ -4,7 +4,7 @@
 	<groupId>com.application</groupId>
 	<artifactId>spring-boot-jpa</artifactId>
 	<version>1.0.0</version>
-	<name>spring-boot-jpa</name>
+	<name>spring-boot-jpa</name>  
 	<properties>
 		<java.version>1.8</java.version>
 		<slf4j.version>1.7.9</slf4j.version>
